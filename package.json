@@ -1,0 +1,16 @@
+{
+  "name": "YC",
+  "version": "0.0.1",
+  "main": "index.html",
+  "window": {
+    "title": "插件",
+    "frame": false,
+    "show_in_taskbar": false,
+    "width": 367,
+    "height": 510,
+    "position": "center",
+    "fullscreen ": false,
+    "always-on-top": false,
+    "transparent": true
+  }
+}
