@@ -17,7 +17,6 @@
             height: 100%;
             overflow: auto;
         }
- 
         body {
             padding: 0;
             margin: 0;
@@ -46,7 +45,7 @@
 		        win.close();
 		    });
 		    var tray = new gui.Tray({
-		       title: 'Tray', 
+		       title: 'Tray',
 		       icon: "img/icon.png",
 		       tooltip: '桌面插件'
 		     });
@@ -94,7 +93,7 @@
 		    };
 		}
 
-		
+
 	</script>
 </head>
 <body class="drag" style="border-style: hidden; border-top-right-radius:30px; background-color:rgba(0,0,0,0);">
@@ -108,7 +107,7 @@
 		</div>
 	</div>
 	<div class="col-xs-4">
-		<div class="text-right"> 
+		<div class="text-right">
             <button id= "setbtn" type="button" class="btn btn-default " style="border: none;background-color: transparent;">
               	<span class="glyphicon glyphicon-cog nodrag"></span>
             </button>
@@ -117,12 +116,12 @@
             </button>
         </div>
 	</div>
-    	
+
     </div>
 </div>
 
 <div id="content" class="container">
-    
+
     <div class="row" style="padding-left: 12px;">
         在岗人数：<span id="onlineNum"></span>
     </div>
@@ -140,7 +139,7 @@
     </div>
 
 
-    <div class="row">
+    <div class="row" style="padding-top: 15px;">
         <div class="panel panel-default" style="max-width: 90%;margin: 0 auto;">
             <div class="panel-heading">
                 <h3 class="panel-title text-center">通知公告</h3>
@@ -150,7 +149,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="padding-top:3px">
+    <div class="row" style="padding-top:10px;">
     <div class="col-xs-6 text-center">
     	<button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(116, 171, 116);">
     		人员案件
@@ -188,7 +187,7 @@
 <script src="js/roma.js"></script>
 <script src="js/infographic.js"></script>
 <script type="text/javascript">
-	
+
 	$('#refreshbtn').click(function () {
 
 		var $rbtn = $('#refreshbtn');
@@ -332,7 +331,7 @@
 	};
 	$(prepareData());
 	function ec1() {
-		var myChart = echarts.init(document.getElementById('charts')); 
+		var myChart = echarts.init(document.getElementById('charts'));
 	    option = {
 	    tooltip : {
 	        trigger: 'item',
@@ -365,22 +364,22 @@
 		        }
 		    ]
 		};
-		
+
 		myChart.on('mouseover', function(){
 			channel.emit('holdCharts');
 		});
 		// myChart.on('legendselectchanged', function(){
 		// 	channel.emit('holdCharts');
 		// });
-	    myChart.setOption(option); 
+	    myChart.setOption(option);
 	}
 	function ec2() {
-		var myChart = echarts.init(document.getElementById('charts')); 
+		var myChart = echarts.init(document.getElementById('charts'));
 		option = {
 		    tooltip : {
 		        trigger: 'axis',
 		        axisPointer : {
-		            type : 'shadow'       
+		            type : 'shadow'
 		        }
 		    },
 		    grid: {
