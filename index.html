@@ -1,418 +1,92 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-        .nodrag {
-            -webkit-app-region: no-drag;
-        }
-        .drag {
-        	-webkit-app-region: drag;
-        }
-        .background {
-            background-color: rgba(237,239,241,1);
-        }
-        html, body {
-            height: 100%;
-            overflow: auto;
-        }
-        body {
-            padding: 0;
-            margin: 0;
-        }
-        .glyphicon-refresh-animate {
-		    -animation: spin 1.2s infinite linear;
-		    -webkit-animation: spin2 1.2s infinite linear;
-		}
-
-		@-webkit-keyframes spin2 {
-		    from { -webkit-transform: rotate(0deg);}
-		    to { -webkit-transform: rotate(360deg);}
-		}
-
-		@keyframes spin {
-		    from { transform: scale(1) rotate(0deg);}
-		    to { transform: scale(1) rotate(360deg);}
-		}
-    </style>
-    <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript">
-	    function buildGUI() {
-		    var gui = require('nw.gui');
-		    var win=gui.Window.get();
-		    $("#closebtn").click(function() {
-		        win.close();
-		    });
-		    var tray = new gui.Tray({
-		       title: 'Tray',
-		       icon: "img/icon.png",
-		       tooltip: '桌面插件'
-		     });
-		    var isWindoeHide = 0;
-
-		    tray.on('click', function () {
-	    		if(isWindoeHide == 0) {
-	    			win.hide();
-	    			isWindoeHide = 1;
-	    		} else {
-	    			win.show();
-	    			isWindoeHide = 0;
-	    		}
-		    });
-
-		    // Give it a menu
-		    var menu = new gui.Menu();
-		    menu.append(new gui.MenuItem({
-		     // type: 'checkbox',
-		     label: '显示插件',
-		     click: function() {
-		      	win.show();
-		      	isWindoeHide = 0;
-		     }
-		    }));
-		    menu.append(new gui.MenuItem({
-		     label: '退出',
-		     click: function() {
-		      win.close();
-		     }
-		    }));
-		    tray.menu = menu;
-
-		    var options = {
-		        icon: "img/icon.png",
-		        body: "插件已启动",
-		        tag: "hahahah"
-		    };
-		    var notification = new Notification("宜春插件",options);
-		    notification.onclick = function () {
-		        console.log('notification');
-		    };
-		    notification.onshow = function () {
-		      setTimeout(function() {notification.close();}, 3000);
-		    };
-		}
-
-
-	</script>
-</head>
-<body class="drag" style="border-style: hidden; border-top-right-radius:30px; background-color:rgba(0,0,0,0);">
-<div class="background" style="height: 100%;">
-<div id="header" class="container">
-	<div class="row">
-	<div class="col-xs-8">
-		<div class="text-left">
-			<!-- <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="180" height="20" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
-			<iframe allowtransparency="true" frameborder="0" width="180" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=3&t=0&v=0&d=3&bd=0&k=000000&f=000000&q=1&e=1&a=1&c=57793&w=180&h=36&align=left"></iframe>
-		</div>
-	</div>
-	<div class="col-xs-4">
-		<div class="text-right">
-            <button id= "setbtn" type="button" class="btn btn-default " style="border: none;background-color: transparent;">
-              	<span class="glyphicon glyphicon-cog nodrag"></span>
-            </button>
-            <button id= "closebtn" type="button" class="btn btn-default " style="border: none;background-color: transparent;">
-              	<span class="glyphicon glyphicon-remove nodrag"></span>
-            </button>
+    <link rel="stylesheet" type="text/css" href="assets/css/main.css">
+    <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+  </head>
+  <body class="drag" style="border-style: hidden; border-top-right-radius:30px; background-color:rgba(0,0,0,0);">
+    <div class="background" style="height: 100%;">
+      <div id="header" class="container">
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="text-left">
+              <!-- <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="180" height="20" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
+              <iframe allowtransparency="true" frameborder="0" width="180" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=3&t=0&v=0&d=3&bd=0&k=000000&f=000000&q=1&e=1&a=1&c=57793&w=180&h=36&align=left"></iframe>
+            </div>
+          </div>
+          <div class="col-xs-4">
+            <div class="text-right">
+              <button id= "setbtn" type="button" class="btn btn-default " style="border: none;background-color: transparent;">
+              <span class="glyphicon glyphicon-cog nodrag"></span>
+              </button>
+              <button id= "closebtn" type="button" class="btn btn-default " style="border: none;background-color: transparent;">
+              <span class="glyphicon glyphicon-remove nodrag"></span>
+              </button>
+            </div>
+          </div>
         </div>
-	</div>
-
-    </div>
-</div>
-
-<div id="content" class="container">
-
-    <div class="row" style="padding-left: 12px;">
-        在岗人数：<span id="onlineNum"></span>
-    </div>
-    <!-- <div class="row" style="padding: 12px;">
-        案件情况：（每日）
-    </div> -->
-    <div class="row nodrag">
-        <div id="charts" style="height: 170px;width:100%;"></div>
-    </div>
-
-    <div class="row text-center" style="padding-left: 12px;">
-    	<button id="switchbtn" type="button" class="btn btn-default nodrag" style="border-style: dashed;background-color: transparent;">
-    		<span class="glyphicon glyphicon-transfer"></span>
-    	</button>
-    </div>
-
-
-    <div class="row" style="padding-top: 15px;">
-        <div class="panel panel-default" style="max-width: 90%;margin: 0 auto;">
+      </div>
+      <div id="content" class="container">
+        <div class="row" style="padding-left: 12px;">
+          在岗人数：<span id="onlineNum"></span>
+        </div>
+        <!-- <div class="row" style="padding: 12px;">
+          案件情况：（每日）
+        </div> -->
+        <div class="row nodrag">
+          <div id="charts" style="height: 170px;width:100%;"></div>
+        </div>
+        <div class="row text-center" style="padding-left: 12px;">
+          <button id="switchbtn" type="button" class="btn btn-default nodrag" style="border-style: dashed;background-color: transparent;">
+          <span class="glyphicon glyphicon-transfer"></span>
+          </button>
+        </div>
+        <div class="row" style="padding-top: 15px;">
+          <div class="panel panel-default" style="max-width: 90%;margin: 0 auto;">
             <div class="panel-heading">
-                <h3 class="panel-title text-center">通知公告</h3>
+              <h3 class="panel-title text-center">通知公告</h3>
             </div>
             <div class="panel-body nodrag" style="font-size: 8px" >
-                会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会
+              会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会
             </div>
+          </div>
         </div>
-    </div>
-    <div class="row" style="padding-top:10px;">
-    <div class="col-xs-6 text-center">
-    	<button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(116, 171, 116);">
-    		人员案件
-    	</button>
-    </div>
-    <div class="col-xs-6 text-center">
-    	<button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(222, 163, 56);">
-    		报警管理
-    	</button>
-    </div>
-    </div>
-</div>
-<div id="setting" class="container" style="display: none;width:80%; ">
-	<div class="row" >
-	<div class="text-center">
-		<div class="input-group">
-			<input type="text" class="form-control nodrag" placeholder="MIS 系统地址">
-			<span class="input-group-btn">
-			<button id="refreshbtn" title="检测连通" class="btn btn-default nodrag" type="button">
-				<span class="glyphicon glyphicon-refresh"></span>
-			</button>
-      </span>
+        <div class="row" style="padding-top:10px;">
+          <div class="col-xs-6 text-center">
+            <button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(116, 171, 116);">
+            人员案件
+            </button>
+          </div>
+          <div class="col-xs-6 text-center">
+            <button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(222, 163, 56);">
+            报警管理
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="setting" class="container" style="display: none;width:80%;">
+        <div class="row" >
+          <div class="text-center">
+            <div class="input-group">
+              <input type="text" class="form-control nodrag" placeholder="MIS 系统地址">
+              <span class="input-group-btn">
+                <button id="refreshbtn" title="检测连通" class="btn btn-default nodrag" type="button">
+                <span class="glyphicon glyphicon-refresh"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-	</div>
-</div>
-</div>
-</body>
-<script type="text/javascript" src="js/jquery.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/bootstrap.min.js" charset="utf-8"></script>
+  </body>
 </html>
-
-<script src="js/echarts.min.js"></script>
-<script src="js/shine.js"></script>
-<script src="js/roma.js"></script>
-<script src="js/infographic.js"></script>
-<script type="text/javascript">
-
-	$('#refreshbtn').click(function () {
-
-		var $rbtn = $('#refreshbtn');
-		var $rbtnspan = $rbtn.find('span');
-		//开始转圈
-		$rbtnspan.addClass('glyphicon-refresh-animate');
-		$rbtn.removeClass('btn-default').addClass('btn-warning');
-		//2s 后发送测试请求
-		setTimeout(function(){
-			$.ajax({
-				url: "http://localhost:8080/yc/desktoptool/connectTest.htm",
-				dataType: 'json',
-				success: function(data) {
-					if(data.success == true) {
-						$rbtnspan.removeClass('glyphicon-refresh-animate');
-						$rbtn.removeClass('btn-warning').addClass('btn-success');
-						$rbtnspan.removeClass('glyphicon-refresh').addClass('glyphicon-ok');
-						$rbtn.addClass('disabled');
-					}
-				},
-				error: function(error) {
-					console.log(error);
-					$rbtnspan.removeClass('glyphicon-refresh-animate');
-					$rbtn.removeClass('btn-warning').addClass('btn-danger');
-					$rbtnspan.removeClass('glyphicon-refresh').addClass('glyphicon-remove');
-					$rbtn.addClass('disabled');
-				}
-			});
-		}, 2000);
-	});
-
-	var events = require('events');
-	var channel = new events.EventEmitter();//设置监听器, nodejs 独有
-	var tick = 0;
-	var switchTick = 10;//间隔时间（秒）
-	channel.on('holdCharts', function() {//如果点击了按钮，记时清零
-		tick = 0;
-	});
-	setInterval(function () {//计时器：每间隔 switchTick 秒切换图表
-		tick++;
-		if(tick == switchTick) {//达到间隔时间重新计时
-			tick = 0;
-			switchCharts();// $('#switchbtn').trigger('click');
-		}
-	}, 1000)
-	var switchCharts = function () {//闭包，能判断切换到哪一个图表
-		var ch = 1;
-		return function() {
-			if(ch == 0) {
-				ec1();
-				ch = 1;
-			} else {
-				ec2();
-				ch = 0;
-			}
-		}
-	}();
-	$('#switchbtn').click(function() {
-		channel.emit('holdCharts');//发送点击事件，计时器重新计时
-		switchCharts();
-	});
-
-	$('#setbtn').click(function () {
-		var showSet = 0;
-		return function() {
-			if(showSet == 0) {
-				$('#content').css('display', 'none');
-				$('#setting').css('display', 'block');
-				showSet = 1;
-			} else {
-				$('#content').css('display', 'block');ec1();channel.emit('holdCharts');
-				$('#setting').css('display', 'none');
-				showSet = 0;
-			}
-		}
-	}());
-
-	$(buildGUI());
-	var onlineNum = 0;
-	var bardata = [];
-	var piedata = [];
-	function prepareData() {
-		console.log("prepareData");
-		$.ajax({
-			url: "http://localhost:8080/yc/desktoptool/getOnlinePatrolsNum.htm",
-			dataType: 'json',
-			success: function(data) {
-				$('#onlineNum').text(data + ' 人');
-			},
-			error: function(error) {
-				$('#onlineNum').text('无法获取在线人数');
-			}
-		});
-		$.ajax({
-			url: "http://localhost:8080/yc/desktoptool/getBarChartData.htm",
-			dataType: 'json',
-			success: function(data) {
-				bardata = [data.ReportNum, data.InstNum, data.DisposeNum, data.ArchiveNum];
-			},
-			error: function(error) {
-				bardata = [0, 0, 0, 0];
-			}
-		});
-		$.ajax({
-			url: "http://localhost:8080/yc/desktoptool/getPieChartData.htm",
-			dataType: 'json',
-			success: function(data) {
-				piedata = [];
-				$.each(data, function(name, value) {
-					if(value > 0) {
-						switch(name) {
-							case "VideoNum":
-								piedata.push({name: "视频上报", value: value});
-								break;
-							case "PatrolNum":
-								piedata.push({name: "巡查上报", value: value});
-								break;
-							case "MessageNum":
-								piedata.push({name: "短信上报", value: value});
-								break;
-							case "CitizenNum":
-								piedata.push({name: "市民通上报", value: value});
-								break;
-							case "PublicNum":
-								piedata.push({name: "社会公众举报", value: value});
-								break;
-							case "PublicFacilityNum":
-								piedata.push({name: "公用设备检测上报", value: value});
-								break;
-						}
-					}
-				});
-				ec1();
-			},
-			error: function(error) {
-				piedata = [
-					{name: "获取数据失败", value: 0}
-				];
-			}
-		});
-	};
-	$(prepareData());
-	function ec1() {
-		var myChart = echarts.init(document.getElementById('charts'));
-	    option = {
-	    tooltip : {
-	        trigger: 'item',
-	        formatter: "{b} : {c} ({d}%)"
-	    },
-	    // legend: {
-	    //     orient: 'horizontal',
-	    //     left: 'center',
-	    //     data: ['视频上报','12319热线','市民上报','巡查上报']
-	    // },
-	    series : [
-		        {
-		            label: {
-		                normal: {
-		                    position: 'out'
-		                }
-		            },
-		            name: '访问来源',
-		            type: 'pie',
-		            radius : '75%',
-		            center: ['50%', '50%'],
-		            data: piedata,
-		            itemStyle: {
-		                emphasis: {
-		                    shadowBlur: 10,
-		                    shadowOffsetX: 0,
-		                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-		                }
-		            }
-		        }
-		    ]
-		};
-
-		myChart.on('mouseover', function(){
-			channel.emit('holdCharts');
-		});
-		// myChart.on('legendselectchanged', function(){
-		// 	channel.emit('holdCharts');
-		// });
-	    myChart.setOption(option);
-	}
-	function ec2() {
-		var myChart = echarts.init(document.getElementById('charts'));
-		option = {
-		    tooltip : {
-		        trigger: 'axis',
-		        axisPointer : {
-		            type : 'shadow'
-		        }
-		    },
-		    grid: {
-		        left: '5%',
-		        right: '5%',
-		        bottom: '10%',
-		        top: '10%',
-		        containLabel: true
-		    },
-		    xAxis : [
-		        {
-		            type : 'category',
-		            data : ['上报','立案','处置','结案']
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'value'
-		        }
-		    ],
-		    series : [
-		        {
-		            name:'直接访问',
-		            type:'bar',
-		            barWidth : 25,
-		            data:bardata
-		        }
-		    ]
-		};
-		myChart.on('mouseover', function(){
-			channel.emit('holdCharts');
-		});
-		myChart.setOption(option);
-	}
-</script>
-<script type="text/javascript" src="js/canvasjs.min.js"></script>
+<script type="text/javascript" src="assets/js/lib/jquery.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/lib/bootstrap.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/lib/echarts.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/ui_build.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/ui_charts.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/ui_getdata.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/ui_events.js" charset="utf-8"></script>

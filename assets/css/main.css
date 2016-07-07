@@ -1,0 +1,31 @@
+.nodrag {
+    -webkit-app-region: no-drag;
+}
+.drag {
+    -webkit-app-region: drag;
+}
+.background {
+    background-color: rgba(237,239,241,1);
+}
+html, body {
+    height: 100%;
+    overflow: auto;
+}
+body {
+    padding: 0;
+    margin: 0;
+}
+.glyphicon-refresh-animate {
+    -animation: spin 1.2s infinite linear;
+    -webkit-animation: spin2 1.2s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
