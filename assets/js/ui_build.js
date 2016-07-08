@@ -1,13 +1,14 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
-
+win.moveTo(window.screen.availWidth - 400, 40);
+win.show();
 function buildGUI() {
     $("#closebtn").click(function() {
         win.close();
     });
     var tray = new gui.Tray({
         title: 'Tray',
-        icon: "img/icon.png",
+        icon: "assets/img/icon.png",
         tooltip: '桌面插件'
     });
     var isWindoeHide = 0;
@@ -41,7 +42,7 @@ function buildGUI() {
     tray.menu = menu;
 
     var options = {
-        icon: "img/icon.png",
+        icon: "assets/img/icon.png",
         body: "插件已启动",
         tag: "hahahah"
     };

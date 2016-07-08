@@ -43,40 +43,55 @@
           <span class="glyphicon glyphicon-transfer"></span>
           </button>
         </div>
-        <div class="row" style="padding-top: 15px;">
-          <div class="panel panel-default" style="max-width: 90%;margin: 0 auto;">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">通知公告</h3>
-            </div>
-            <div class="panel-body nodrag" style="font-size: 8px" >
-              会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会会议通知：5月20日下午15：00开会
-            </div>
-          </div>
-        </div>
-        <div class="row" style="padding-top:10px;">
-          <div class="col-xs-6 text-center">
-            <button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(116, 171, 116);">
-            人员案件
-            </button>
-          </div>
-          <div class="col-xs-6 text-center">
-            <button type="button" class="btn btn-default text-center nodrag" style="background-color: rgb(222, 163, 56);">
-            报警管理
-            </button>
-          </div>
-        </div>
       </div>
       <div id="setting" class="container" style="display: none;width:80%;">
         <div class="row" >
           <div class="text-center">
             <div class="input-group">
-              <input type="text" class="form-control nodrag" placeholder="MIS 系统地址">
+              <input id="YCaddr" type="text" class="form-control nodrag" placeholder="MIS 系统地址">
               <span class="input-group-btn">
                 <button id="refreshbtn" title="检测连通" class="btn btn-default nodrag" type="button">
-                <span class="glyphicon glyphicon-refresh"></span>
+                  <span class="glyphicon glyphicon-refresh"></span>
                 </button>
               </span>
             </div>
+          </div>
+        </div>
+      </div>
+      <div id="supervise" class="container" style="display: none;">
+        <div class="row" style="height:224px; overflow:scroll;">
+          <table id="superviseTable" class="table table-hover nodrag">
+            <thead>
+              <tr>
+                <th>时间</th>
+                <th>地址</th>
+                <th>指标</th>
+                <th>指标值</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="notice" class="container">
+        <div class="row" style="padding-top: 15px;">
+          <div class="panel panel-info" style="max-width: 90%;margin: 0 auto;">
+            <div class="panel-heading">
+              <h3 class="panel-title text-center">通知公告</h3>
+            </div>
+            <div id="noticePanel" class="panel-body nodrag" style="font-size: 8px" >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="bottom" class="container">
+        <div class="row" style="padding-top:10px;">
+          <div class="col-xs-6 text-center">
+            <button id="peopleManager" type="button" class="btn btn-success text-center nodrag">人员案件</button>
+          </div>
+          <div class="col-xs-6 text-center">
+            <button id="superviseManager" type="button" class="btn btn-default text-center nodrag">报警管理</button>
           </div>
         </div>
       </div>
@@ -90,3 +105,4 @@
 <script type="text/javascript" src="assets/js/ui_charts.js" charset="utf-8"></script>
 <script type="text/javascript" src="assets/js/ui_getdata.js" charset="utf-8"></script>
 <script type="text/javascript" src="assets/js/ui_events.js" charset="utf-8"></script>
+<script type="text/javascript" src="assets/js/sys.js" charset="utf-8"></script>

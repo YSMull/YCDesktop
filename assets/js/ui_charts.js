@@ -1,4 +1,5 @@
 function ec1() {
+    console.log('render pieChart');
     var myChart = echarts.init(document.getElementById('charts'));
     option = {
         tooltip: {
@@ -20,7 +21,7 @@ function ec1() {
             type: 'pie',
             radius: '75%',
             center: ['50%', '50%'],
-            data: piedata,
+            data: pieData,
             itemStyle: {
                 emphasis: {
                     shadowBlur: 10,
@@ -41,6 +42,7 @@ function ec1() {
 }
 
 function ec2() {
+    console.log('render barChart');
     var myChart = echarts.init(document.getElementById('charts'));
     option = {
         tooltip: {
@@ -67,7 +69,7 @@ function ec2() {
             name: '直接访问',
             type: 'bar',
             barWidth: 25,
-            data: bardata
+            data: barData
         }]
     };
     myChart.on('mouseover', function() {
@@ -75,16 +77,37 @@ function ec2() {
     });
     myChart.setOption(option);
 }
-var switchCharts = function () {//闭包，能判断切换到哪一个图表
-        var ch = 1;
-        return function() {
-            if(ch == 0) {
-                ec1();
-                ch = 1;
-            } else {
-                ec2();
-                ch = 0;
-            }
+var switchCharts = function() { //闭包，能判断切换到哪一个图表
+    var ch = 1;
+    return function() {
+        console.log('switchCharts');
+        if (ch == 0) {
+            ec1();
+            ch = 1;
+        } else {
+            ec2();
+            ch = 0;
         }
-    }();
+    }
+}();
 
+function renderSuperviseTable() {
+    console.log('renderSuperviseTable');
+    $table = $('#superviseTable tbody');
+    $table.empty();
+    for (var i = 0; i < superviseData.length; i++) {
+        var ntr = document.createElement('tr');
+        var reportTime = '<td>' + new Date(superviseData[i].reportTime).toISOString().slice(5, 10) + '-' + new Date(superviseData[i].reportTime).toISOString().slice(11, 19) + '</td>';
+        var equipName = '<td>' + superviseData[i].equipName + '</td>';
+        var fieldName = '<td>' + superviseData[i].fieldName + '</td>'
+        var equipFieldValue = '<td>' + superviseData[i].equipFieldValue + '</td>';
+        ntr.innerHTML = reportTime+equipName+fieldName+equipFieldValue;
+
+        $table.append(ntr);
+    }
+}
+
+function refreshNoticePanel() {
+    console.log('refreshNoticePanel');
+    $('#noticePanel').text(noticeData.content);
+}

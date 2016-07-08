@@ -1,70 +1,98 @@
 var onlineNum = 0;
-var bardata = [];
-var piedata = [];
+var barData = [];
+var pieData = [];
 var firstStart = 1;
+var superviseData = [];
+var noticeData;
 
 function getData() {
     console.log("getData");
+    var fs = require('fs');
+    var path = require('path');
+    var file = path.join(path.dirname(process.execPath), '/addr.json');
+    fs.exists(file, function(exists) {
+        if (exists) {
+            console.log('找到addr.json文件...');
+            fs.readFile(file, 'utf8', function(err, data) {
+                if (err) throw err;
+                var addr = JSON.parse(data.toString());
+                if (addr != '') {
+                    console.log('自动设置MIS地址...');
+                    $('#YCaddr').val(addr);
+                    ycaddr = addr;
+                    ajaxProcess();
+                }
+            })
+        } else {
+            console.log('没有找到addr.json文件...');
+        }
+    });
+};
+
+function ajaxProcess() {
+    console.log('正在远程获取数据...');
     $.ajax({
-        url: "http://localhost:8080/yc/desktoptool/getOnlinePatrolsNum.htm",
+        url: ycaddr + "/desktoptool/getOnlinePatrolsNum.htm",
         dataType: 'json',
         success: function(data) {
             $('#onlineNum').text(data + ' 人');
         },
         error: function(error) {
+            console.log('获取在线人数失败！');
             $('#onlineNum').text('无法获取在线人数');
         }
     });
     $.ajax({
-        url: "http://localhost:8080/yc/desktoptool/getBarChartData.htm",
+        url: ycaddr + "/desktoptool/getBarChartData.htm",
         dataType: 'json',
         success: function(data) {
-            bardata = [data.ReportNum, data.InstNum, data.DisposeNum, data.ArchiveNum];
+            barData = [data.ReportNum, data.InstNum, data.DisposeNum, data.ArchiveNum];
         },
         error: function(error) {
-            bardata = [0, 0, 0, 0];
+            console.log('获取柱状图数据失败！');
+            barData = [0, 0, 0, 0];
         }
     });
     $.ajax({
-        url: "http://localhost:8080/yc/desktoptool/getPieChartData.htm",
+        url: ycaddr + "/desktoptool/getPieChartData.htm",
         dataType: 'json',
         success: function(data) {
-            piedata = [];
+            pieData = [];
             $.each(data, function(name, value) {
                 if (value > 0) {
                     switch (name) {
                         case "VideoNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "视频上报",
                                 value: value
                             });
                             break;
                         case "PatrolNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "巡查上报",
                                 value: value
                             });
                             break;
                         case "MessageNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "短信上报",
                                 value: value
                             });
                             break;
                         case "CitizenNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "市民通上报",
                                 value: value
                             });
                             break;
                         case "PublicNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "社会公众举报",
                                 value: value
                             });
                             break;
                         case "PublicFacilityNum":
-                            piedata.push({
+                            pieData.push({
                                 name: "公用设备检测上报",
                                 value: value
                             });
@@ -78,8 +106,9 @@ function getData() {
             }
         },
         error: function(error) {
-            piedata = [{
-                name: "获取数据失败",
+            console.log('获取饼图数据失败！')
+            pieData = [{
+                name: "无数据",
                 value: 0
             }];
             if (firstStart == 1) {
@@ -88,6 +117,29 @@ function getData() {
             }
         }
     });
-};
+    $.ajax({
+            url: ycaddr + '/desktoptool/getSupervise.htm',
+            type: 'GET',
+            dataType: 'json'
+        })
+        .done(function(data) {
+            superviseData = data;
+            renderSuperviseTable();
+        })
+        .fail(function() {
+            console.log('获取预警信息失败！');
+        });
+    $.ajax({
+            url: ycaddr + '/desktoptool/getNotice.htm',
+            type: 'GET',
+            dataType: 'json'
+        })
+        .done(function(data) {
+            noticeData = data;
+            refreshNoticePanel();
+        })
+        .fail(function() {
+            console.log("获取公告信息失败！");
+        });
+}
 $(getData());
-// $(ec1());

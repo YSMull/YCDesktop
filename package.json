@@ -11,6 +11,7 @@
     "position": "center",
     "fullscreen ": false,
     "always-on-top": false,
-    "transparent": true
+    "transparent": true,
+    "show": false
   }
 }
