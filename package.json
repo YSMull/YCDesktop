@@ -1,6 +1,8 @@
 {
-  "name": "YC",
-  "version": "0.0.1",
+  "name": "YCDesktop",
+  "version": "1.0.0",
+  "description": "A desktop tool for eGovaMis systems.",
+  "license" : "MIT",
   "main": "index.html",
   "window": {
     "title": "插件",
@@ -13,5 +15,12 @@
     "always-on-top": false,
     "transparent": true,
     "show": false
+  },
+  "dependencies": {
+    "regedit": "^2.2.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mys1993/YCDesktop.git"
   }
 }
