@@ -1,9 +1,5 @@
 var reg = require('regedit');
 
-// console.log(process.cwd());
-// console.log(path.dirname(process.execPath));
-// console.log(process.execPath)
-
 reg.putValue({
     'HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run': {
         'YCDesktop': {
@@ -11,7 +7,8 @@ reg.putValue({
             type: 'REG_SZ'
         }
     }
-}, function() {
+}, function(err) {
+    if(err) throw err;
     reg.list('HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run')
         .on('data', function(entry) {
             if (entry.data.values['YCDesktop'] == undefined) {
@@ -21,3 +18,6 @@ reg.putValue({
             }
         });
 });
+// console.log(process.cwd());
+// console.log(path.dirname(process.execPath));
+// console.log(process.execPath)

@@ -70,7 +70,7 @@ $('#refreshbtn').click(function() {
 				fs.writeFile(file, JSON.stringify($('#YCaddr').val().replace(/(\/*$)/g,'')), 'utf8', function(err){
 					if(err) throw err;
 					console.log('成功保存地址到addr.json文件');
-				})
+				});
 
 				if (data.success == true) {
 					ycaddr = $('#YCaddr').val().replace(/(\/*$)/g,'');
