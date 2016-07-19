@@ -1,7 +1,17 @@
 var gui = require('nw.gui');
 var win = gui.Window.get();
-win.moveTo(window.screen.availWidth - 400, 40);
+
+
+var scn = gui.Screen.Init();
+var s_width = scn.screens[0].bounds.width; //1920
+var s_height = scn.screens[0].bounds.height; //1080
+
+//适配分辨率
+win.moveTo(s_width - 400/1920 * s_width, 40/1080 * s_height);
+win.width = 367/1920 * s_width;
+win.height = 510/1080 * s_height;
 win.show();
+
 function buildGUI() {
     $("#closebtn").click(function() {
         win.close();
