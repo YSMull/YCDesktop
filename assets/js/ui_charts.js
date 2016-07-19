@@ -107,7 +107,18 @@ function renderSuperviseTable() {
     }
 }
 
-function refreshNoticePanel() {
-    console.log('refreshNoticePanel');
-    $('#noticePanel').text(noticeData.content);
+function refreshNotice() {
+    console.log('refreshNotice');
+    $('#noticeModal').text(noticeData.content);
+    var limits = 70;
+    if(noticeData.content.length >= limits) {
+        $('#noticePanel').text(noticeData.content.substring(0, limits) + "...");
+        $('#noticePanel').append("<a class=\"nodrag\" data-toggle=\"modal\" data-target=\"#myModal\" style=\"cursor: pointer;\">查看更多</a>");
+
+    } else {
+        $('#noticePanel').text(noticeData.content);
+    }
+
+
+
 }

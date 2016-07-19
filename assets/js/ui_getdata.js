@@ -136,7 +136,7 @@ function ajaxProcess() {
         })
         .done(function(data) {
             noticeData = data;
-            refreshNoticePanel();
+            refreshNotice();
         })
         .fail(function() {
             console.log("获取公告信息失败！");

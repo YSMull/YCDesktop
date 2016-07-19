@@ -14,7 +14,8 @@
     "fullscreen ": false,
     "always-on-top": false,
     "transparent": true,
-    "show": false
+    "show": false,
+    "resizable": false
   },
   "dependencies": {
     "regedit": "^2.2.6"

@@ -1,102 +1,125 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="assets/css/main.css">
     <link href="assets/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-  </head>
-  <body class="drag" style="border-style: hidden; border-top-right-radius:30px; background-color:rgba(0,0,0,0);">
+</head>
+
+<body class="drag" style="border-style: hidden; border-top-right-radius:30px; background-color:rgba(0,0,0,0);">
     <div class="background" style="height: 100%;">
-      <div id="header" class="container">
-        <div class="row">
-          <div class="col-xs-8">
-            <div class="text-left">
-              <!-- <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="180" height="20" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
-              <iframe allowtransparency="true" frameborder="0" width="180" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=3&t=0&v=0&d=3&bd=0&k=000000&f=000000&q=1&e=1&a=1&c=57793&w=180&h=36&align=left"></iframe>
+        <div id="header" class="container">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="text-left">
+                        <!-- <iframe name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=1" width="180" height="20" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe> -->
+                        <iframe allowtransparency="true" frameborder="0" width="180" height="36" scrolling="no" src="http://tianqi.2345.com/plugin/widget/index.htm?s=3&z=3&t=0&v=0&d=3&bd=0&k=000000&f=000000&q=1&e=1&a=1&c=57793&w=180&h=36&align=left"></iframe>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="text-right">
+                        <button id="setbtn" type="button" class="btn btn-default nodrag" style="border: none;background-color: transparent;">
+                            <span class="glyphicon glyphicon-cog"></span>
+                        </button>
+                        <button id="closebtn" type="button" class="btn btn-default nodrag" style="border: none;background-color: transparent;">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-xs-4">
-            <div class="text-right">
-              <button id= "setbtn" type="button" class="btn btn-default nodrag" style="border: none;background-color: transparent;">
-              <span class="glyphicon glyphicon-cog"></span>
-              </button>
-              <button id= "closebtn" type="button" class="btn btn-default nodrag" style="border: none;background-color: transparent;">
-              <span class="glyphicon glyphicon-remove"></span>
-              </button>
+        </div>
+        <div id="content" class="container">
+            <div class="row" style="padding-left: 12px;">
+                在岗人数：<span id="onlineNum"></span>
             </div>
-          </div>
-        </div>
-      </div>
-      <div id="content" class="container">
-        <div class="row" style="padding-left: 12px;">
-          在岗人数：<span id="onlineNum"></span>
-        </div>
-        <!-- <div class="row" style="padding: 12px;">
+            <!-- <div class="row" style="padding: 12px;">
           案件情况：（每日）
         </div> -->
-        <div class="row nodrag">
-          <div id="charts" style="height: 170px;width:100%;"></div>
+            <div class="row nodrag">
+                <div id="charts" style="height: 170px;width:100%;"></div>
+            </div>
+            <div class="row text-center" style="padding-left: 12px;">
+                <button id="switchbtn" type="button" class="btn btn-default nodrag" style="border-style: dashed;background-color: transparent;">
+                    <span class="glyphicon glyphicon-transfer"></span>
+                </button>
+            </div>
         </div>
-        <div class="row text-center" style="padding-left: 12px;">
-          <button id="switchbtn" type="button" class="btn btn-default nodrag" style="border-style: dashed;background-color: transparent;">
-          <span class="glyphicon glyphicon-transfer"></span>
-          </button>
-        </div>
-      </div>
-      <div id="setting" class="container" style="display: none;width:80%;">
-        <div class="row" >
-          <div class="text-center">
-            <div class="input-group">
-              <input id="YCaddr" type="text" class="form-control nodrag" placeholder="MIS 系统地址">
-              <span class="input-group-btn">
+        <div id="setting" class="container" style="display: none;width:80%;">
+            <div class="row">
+                <div class="text-center">
+                    <div class="input-group">
+                        <input id="YCaddr" type="text" class="form-control nodrag" placeholder="MIS 系统地址">
+                        <span class="input-group-btn">
                 <button id="refreshbtn" title="检测连通" class="btn btn-default nodrag" type="button">
                   <span class="glyphicon glyphicon-refresh"></span>
-                </button>
-              </span>
+                        </button>
+                        </span>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div id="supervise" class="container" style="display: none;">
-        <div class="row" style="height:224px; overflow:scroll;">
-          <table id="superviseTable" class="table table-hover nodrag">
-            <thead>
-              <tr>
-                <th>时间</th>
-                <th>地址</th>
-                <th>指标</th>
-                <th>指标值</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div id="notice" class="container">
-        <div class="row" style="padding-top: 15px;">
-          <div class="panel panel-info" style="max-width: 90%;margin: 0 auto;">
-            <div class="panel-heading">
-              <h3 class="panel-title text-center">通知公告</h3>
+        <div id="supervise" class="container" style="display: none;">
+            <div class="row" style="height:224px; overflow:scroll;">
+                <table id="superviseTable" class="table table-hover nodrag">
+                    <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th>地址</th>
+                            <th>指标</th>
+                            <th>指标值</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </div>
-            <div id="noticePanel" class="panel-body nodrag" style="font-size: 8px" >
+        </div>
+        <div id="notice" class="container">
+            <div class="row" style="padding-top: 15px;">
+                <div class="panel panel-info" style="max-width: 90%;margin: 0 auto;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title text-center">通知公告</h3>
+                    </div>
+                    <div id="noticePanel" class="panel-body nodrag" style="font-size: 14px">
+                    </div>
+
+                </div>
             </div>
-          </div>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">通知公告</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div id="noticeModal"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default nodrag" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal -->
+            </div>
+            <div id="bottom" class="container">
+                <div class="row" style="padding-top:10px;">
+                    <div class="col-xs-6 text-center">
+                        <button id="peopleManager" type="button" class="btn btn-success text-center nodrag">人员案件</button>
+                    </div>
+                    <div class="col-xs-6 text-center">
+                        <button id="superviseManager" type="button" class="btn btn-default text-center nodrag">报警管理</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-      <div id="bottom" class="container">
-        <div class="row" style="padding-top:10px;">
-          <div class="col-xs-6 text-center">
-            <button id="peopleManager" type="button" class="btn btn-success text-center nodrag">人员案件</button>
-          </div>
-          <div class="col-xs-6 text-center">
-            <button id="superviseManager" type="button" class="btn btn-default text-center nodrag">报警管理</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+</body>
+
 </html>
 <script type="text/javascript" src="assets/js/lib/jquery.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="assets/js/lib/bootstrap.min.js" charset="utf-8"></script>
