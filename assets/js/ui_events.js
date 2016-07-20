@@ -97,19 +97,27 @@ $('#switchbtn').click(function() {
 });
 
 $('#superviseManager').click(function() {
+	$('#peopleManager').prop('disabled', true);
 	$('#content').fadeOut('300', function() {
-		$('#supervise').fadeIn('300');
+		$('#supervise').fadeIn('300', function() {
+			$('#peopleManager').prop('disabled', false);
+		});
 	});
+
 	$('#peopleManager').removeClass('btn-success').addClass('btn-default');
 	$('#superviseManager').removeClass('btn-default').addClass('btn-success');
 });
 
 $('#peopleManager').click(function() {
+	$('#superviseManager').prop('disabled', true);
 	$('#supervise').fadeOut('300', function() {
-		$('#content').fadeIn('300');
+		$('#content').fadeIn('300', function() {
+			$('#superviseManager').prop('disabled', false);
+		});
 		ec1();
 		channel.emit('holdCharts');
 	});
+
 	$('#superviseManager').removeClass('btn-success').addClass('btn-default');
 	$('#peopleManager').removeClass('btn-default').addClass('btn-success');
 });
