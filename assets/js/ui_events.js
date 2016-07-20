@@ -3,12 +3,14 @@ var ycaddr;
 var channel = new events.EventEmitter(); //设置监听器, nodejs 独有
 var tick = 0;
 var switchTick = 10; //间隔时间（秒）
+var switchSpeed = 200; //切换各面板的动画时长
+var updateFreq = 8000; //数据更新频率 (毫秒)
 channel.on('holdCharts', function() { //如果点击了按钮，记时清零
 	tick = 0;
 });
 setInterval(function() { //每隔五秒获取数据一次
 	getData();
-}, 5000);
+}, updateFreq);
 setInterval(function() { //计时器：每间隔 switchTick 秒切换图表
 	tick++;
 	if (tick == switchTick) { //达到间隔时间重新计时
@@ -30,13 +32,13 @@ $('#setbtn').click(function() {
 			}
 		}
 		if (showSet == 0) {
-			$('#bottom,#notice,'+hide).fadeOut('300', function() {
-				$('#setting').fadeIn('300');
+			$('#bottom,#notice,'+hide).fadeOut(switchSpeed, function() {
+				$('#setting').fadeIn(switchSpeed);
 			});
 			showSet = 1;
 		} else {
-			$('#setting').fadeOut('300', function() {
-				$('#bottom,#notice,'+hide).fadeIn('300');
+			$('#setting').fadeOut(switchSpeed, function() {
+				$('#bottom,#notice,'+hide).fadeIn(switchSpeed);
 				if(hide == '#content') {
 					ec1();
 					channel.emit('holdCharts');
@@ -98,8 +100,8 @@ $('#switchbtn').click(function() {
 
 $('#superviseManager').click(function() {
 	$('#peopleManager').prop('disabled', true);
-	$('#content').fadeOut('300', function() {
-		$('#supervise').fadeIn('300', function() {
+	$('#content').fadeOut(switchSpeed, function() {
+		$('#supervise').fadeIn(switchSpeed, function() {
 			$('#peopleManager').prop('disabled', false);
 		});
 	});
@@ -110,8 +112,8 @@ $('#superviseManager').click(function() {
 
 $('#peopleManager').click(function() {
 	$('#superviseManager').prop('disabled', true);
-	$('#supervise').fadeOut('300', function() {
-		$('#content').fadeIn('300', function() {
+	$('#supervise').fadeOut(switchSpeed, function() {
+		$('#content').fadeIn(switchSpeed, function() {
 			$('#superviseManager').prop('disabled', false);
 		});
 		ec1();
