@@ -110,6 +110,7 @@ function renderSuperviseTable() {
 function refreshNotice() {
     console.log('refreshNotice');
     $('#noticeModal').text(noticeData.content);
+    $('#noticePanel').empty();
     var limits = 70;
     if(noticeData.content.length >= limits) {
         $('#noticePanel').text(noticeData.content.substring(0, limits) + "...");
